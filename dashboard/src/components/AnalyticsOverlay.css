@@ -1,0 +1,43 @@
+.analytics-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 420px;
+  background: #fff;
+  z-index: 20;
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.analytics-overlay-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.analytics-overlay-header p {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: rgb(71, 71, 71);
+  margin: 0;
+}
+
+.analytics-overlay-header span {
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: rgb(145, 145, 145);
+  line-height: 1;
+}
+
+.analytics-overlay-header span:hover {
+  color: rgb(245, 104, 52);
+}
+
+.analytics-overlay-chart {
+  max-width: 360px;
+  margin: 0 auto;
+}
