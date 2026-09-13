@@ -7,7 +7,7 @@ import axios from "axios";
 const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:3002";
 const FRONTEND_URL =
   process.env.REACT_APP_FRONTEND_URL || "http://localhost:3000";
-export const LOGIN_URL = `${FRONTEND_URL}/login`;
+export const LOGIN_URL = `${FRONTEND_URL}/?next=login`;
 
 export const getToken = () => localStorage.getItem("token");
 export const getUsername = () => localStorage.getItem("username") || "User";
