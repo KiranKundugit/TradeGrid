@@ -2,6 +2,13 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+// Set via REACT_APP_API_URL / REACT_APP_DASHBOARD_URL in a .env file for
+// local dev, and in Render's Static Site "Environment Variables" for
+// production. CRA bakes these in at BUILD time.
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3002";
+const DASHBOARD_URL =
+  process.env.REACT_APP_DASHBOARD_URL || "http://localhost:3001";
+
 const Signup = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -18,14 +25,14 @@ const Signup = () => {
     e.preventDefault();
     try {
       // 1. Send registration data to backend API
-      const res = await axios.post("http://localhost:3002/signup", formData);
+      const res = await axios.post(`${API_URL}/signup`, formData);
       const token = res.data.token;
       const username = res.data.username;
 
-      // 2. The dashboard runs on a different port (3001) with its own
+      // 2. The dashboard runs on a different origin with its own
       // localStorage, so hand the token/username along as URL params.
       const params = new URLSearchParams({ token, username });
-      window.location.href = `http://localhost:3001/?${params.toString()}`;
+      window.location.href = `${DASHBOARD_URL}/?${params.toString()}`;
     } catch (err) {
       setError(err.response?.data?.message || "Signup failed. Please try again.");
     }

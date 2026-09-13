@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+// Set via REACT_APP_API_URL / REACT_APP_DASHBOARD_URL in a .env file for
+// local dev, and in Render's Static Site "Environment Variables" for
+// production. CRA bakes these in at BUILD time.
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3002";
+const DASHBOARD_URL =
+  process.env.REACT_APP_DASHBOARD_URL || "http://localhost:3001";
+
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
@@ -12,12 +19,15 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3002/login", formData);
+      const res = await axios.post(`${API_URL}/login`, formData);
       const token = res.data.token;
       const username = res.data.username || res.data.user?.username || "User";
 
+      // The dashboard runs on a different origin, so it has its own
+      // localStorage. Pass the token/username along as URL params so the
+      // dashboard can pick them up and store them for itself.
       const params = new URLSearchParams({ token, username });
-      window.location.href = `http://localhost:3001/?${params.toString()}`;
+      window.location.href = `${DASHBOARD_URL}/?${params.toString()}`;
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Check your credentials.");
     }
